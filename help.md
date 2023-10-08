@@ -55,3 +55,6 @@ https://hackmamba.io/blog/2020/12/aggregate-multiple-api-requests-with-promise-a
 
 15. Foreign key and deleting on cascade 
 https://www.commandprompt.com/education/postgresql-delete-cascade-with-examples/
+
+
+https://65224a7a94794e0008bec647--venerable-begonia-88eaeb.netlify.app/
