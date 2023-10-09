@@ -24,7 +24,7 @@ app.use(cors(corsOptions));
 
 const port = 5000;
 
-// db.connectClient();
+db.connectClient();
 
 app.use(expressSession({
   secret: process.env.COOKIE_SECRET,
