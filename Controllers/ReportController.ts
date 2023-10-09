@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import Report from "../Models/Report";
-import Comment from "../Models/Comment";
 import Story from "../Models/Story";
 import User from "../Models/User";
+import Comment from "../Models/Comment";
 
 const postReport = async (req: Request, res: Response) => {
   try {
