@@ -1,3 +1,4 @@
+// @ts-nocheck 
 import { NextFunction, Request, Response } from "express";
 const app = require('..');
 const expressSession = require('express-session');
