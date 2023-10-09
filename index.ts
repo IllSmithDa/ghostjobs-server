@@ -77,11 +77,11 @@ app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-// app.get('/auth/google', 
-//   passport.authenticate('google', {
-//     scope: ['profile', 'email']
-//   })
-// );
+app.get('/auth/google', 
+  passport.authenticate('google', {
+    scope: ['profile', 'email']
+  })
+);
 
 // routes(app);
 export default app;
