@@ -5,6 +5,8 @@ declare global {
       session?: Record<string,any>,
     }
   }
-  declare module 'express';
-  declare module 'body-parser';
+}
+
+declare module express {
+  any
 }
