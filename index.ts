@@ -3,7 +3,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
-// import User from './Models/User';
+import User from './Models/User';
 const cors = require('cors');
 const corsOptions = require('./config/corsOption');
 const expressSession = require('express-session');
