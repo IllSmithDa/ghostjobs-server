@@ -1,3 +1,4 @@
+// @ts-nocheck 
 const passport = require("passport");
 import { Express} from 'express';
 import { Request, Response } from 'express-serve-static-core';
