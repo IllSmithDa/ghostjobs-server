@@ -10,7 +10,7 @@ const expressSession = require('express-session');
 // const routes = require('./routes/routes');
 const pgSession = require('connect-pg-simple')(expressSession);
 const passport = require("passport");
-// const passportAuth = require('./passport');
+const passportAuth = require('./passport');
 // const GoogleStrategy = require("passport-google-oauth20").Strategy;
 // const GOOGLE_CLIENT_ID = process.env.OATH_CLIENT_GOOGLE_ID;
 // const GOOGLE_CLIENT_SECRET = process.env.OATH_CLIENT_GOOGLE_SECRET;
@@ -41,8 +41,8 @@ app.use(expressSession({
 
 //https://www.passportjs.org/packages/passport-google-oauth20/
 //initialize oauth
-  //app.use(passport.initialize());
-  //app.use(passport.session());
+  app.use(passport.initialize());
+  app.use(passport.session());
  
   //passport.use(
   //  new GoogleStrategy(
