@@ -11,9 +11,9 @@ const expressSession = require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
 const passport = require("passport");
 const passportAuth = require('./passport');
-// const GoogleStrategy = require("passport-google-oauth20").Strategy;
-// const GOOGLE_CLIENT_ID = process.env.OATH_CLIENT_GOOGLE_ID;
-// const GOOGLE_CLIENT_SECRET = process.env.OATH_CLIENT_GOOGLE_SECRET;
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const GOOGLE_CLIENT_ID = process.env.OATH_CLIENT_GOOGLE_ID;
+const GOOGLE_CLIENT_SECRET = process.env.OATH_CLIENT_GOOGLE_SECRET;
 
 
 dotenv.config();
