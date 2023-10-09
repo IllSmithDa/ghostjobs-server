@@ -9,7 +9,7 @@ const ReportController = require('../Controllers/ReportController')
 const SearchController = require('../Controllers/SearchController');
 const AdminController = require('../Controllers/AdminController');
 const Session = require('../Middleware/Session');
-
+// @ts-nocheck 
 import { Express } from 'express';
 
 module.exports = (server:Express) => {
