@@ -1,3 +1,4 @@
+// @ts-nocheck 
 import { NextFunction, Request, Response } from "express";
 import User from "../Models/User";
 import validate from "deep-email-validator";

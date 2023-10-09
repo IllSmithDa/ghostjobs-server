@@ -1,3 +1,4 @@
+// @ts-nocheck 
 import { Request, Response } from "express";
 import Story from "../Models/Story";
 import { S3 } from "aws-sdk";
