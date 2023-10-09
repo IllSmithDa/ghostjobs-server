@@ -1,8 +1,7 @@
-// @ts-ignore
+// @ts-nocheck 
 import * as db from './db';
-import express, { Express, Request, Response} from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
-import { promisify } from 'util';
 import bodyParser from 'body-parser';
 import User from './Models/User';
 const cors = require('cors');
