@@ -1,3 +1,4 @@
+// @ts-ignore
 import * as db from './db';
 import express, { Express, Request, Response} from 'express';
 import dotenv from 'dotenv';
