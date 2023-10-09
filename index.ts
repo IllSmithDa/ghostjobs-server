@@ -7,7 +7,7 @@ import User from './Models/User';
 const cors = require('cors');
 const corsOptions = require('./config/corsOption');
 const expressSession = require('express-session');
-const routes = require('./routes/routes');
+// const routes = require('./routes/routes');
 const pgSession = require('connect-pg-simple')(expressSession);
 const passport = require("passport");
 const passportAuth = require('./passport');
@@ -71,17 +71,17 @@ app.use(expressSession({
   );
 
 // Start the server
-passportAuth(app);
+// passportAuth(app);
 
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-app.get('/auth/google', 
-  passport.authenticate('google', {
-    scope: ['profile', 'email']
-  })
-);
+// app.get('/auth/google', 
+//   passport.authenticate('google', {
+//     scope: ['profile', 'email']
+//   })
+// );
 
 // routes(app);
 export default app;
