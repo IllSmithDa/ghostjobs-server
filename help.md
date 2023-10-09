@@ -58,3 +58,8 @@ https://www.commandprompt.com/education/postgresql-delete-cascade-with-examples/
 
 
 https://65224a7a94794e0008bec647--venerable-begonia-88eaeb.netlify.app/
+
+
+16. TS node heroku use
+
+https://stackoverflow.com/questions/34224150/heroku-deploy-using-ts-node
