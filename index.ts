@@ -26,18 +26,18 @@ const port = 5000;
 
 // db.connectClient();
 
-// app.use(expressSession({
-//   secret: process.env.COOKIE_SECRET,
-//   cookie: {
-//     maxAge: 30 * 24 * 60 * 60 * 1000,
-//   },
-//   resave: true,
-//   saveUninitialized: false,
-//   store:  new pgSession({
-//     conString: process.env.DATABASE_URL,
-//     tableName: 'user_sessions' 
-//   }),
-// }))
+app.use(expressSession({
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+  },
+  resave: true,
+  saveUninitialized: false,
+  store:  new pgSession({
+    conString: process.env.DATABASE_URL,
+    tableName: 'user_sessions' 
+  }),
+}))
 
 //https://www.passportjs.org/packages/passport-google-oauth20/
 //initialize oauth
