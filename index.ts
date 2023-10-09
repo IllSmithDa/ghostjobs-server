@@ -44,31 +44,31 @@ app.use(expressSession({
   app.use(passport.initialize());
   app.use(passport.session());
  
-  //passport.use(
-  //  new GoogleStrategy(
-  //    {
-  //      clientID: GOOGLE_CLIENT_ID,
-  //      clientSecret: GOOGLE_CLIENT_SECRET,
-  //      callbackURL: "http://localhost:5000/auth/google/callback",
-  //      passReqToCallback: true,
-  //    },
-  //    async function (req:any, accessToken:any, refreshToken:any, profile:any, done:any) {
-  //      const email = profile.emails[0].value;
-  //      const user = await User.findUserbyEmail(email);
-  //      if (user.success) 
-  //      {
-  //        console.log(user.data.username)
-  //        req.session.user = user.data.username;
-  //        // https://stackoverflow.com/questions/26531143/sessions-wont-save-in-node-js-without-req-session-save
-  //        req.res.redirect('http://localhost:3000')
-  //        // // console.log(req.session)
-  //        // done(null, user)
-  //      } else {
-  //        req.res.redirect('http://localhost:3000/login-help')
-  //      }
-  //    }
-  //  )
-  //);
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: GOOGLE_CLIENT_ID,
+        clientSecret: GOOGLE_CLIENT_SECRET,
+        callbackURL: "http://localhost:5000/auth/google/callback",
+        passReqToCallback: true,
+      },
+      async function (req:any, accessToken:any, refreshToken:any, profile:any, done:any) {
+        const email = profile.emails[0].value;
+        const user = await User.findUserbyEmail(email);
+        if (user.success) 
+        {
+          console.log(user.data.username)
+          req.session.user = user.data.username;
+          // https://stackoverflow.com/questions/26531143/sessions-wont-save-in-node-js-without-req-session-save
+          req.res.redirect('http://localhost:3000')
+          // // console.log(req.session)
+          // done(null, user)
+        } else {
+          req.res.redirect('http://localhost:3000/login-help')
+        }
+      }
+    )
+  );
 
 // Start the server
 // passportAuth(app);
