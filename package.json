@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "npm test",
-    "start": "nodemon --inspect index.ts"
+    "start": "nodemon index.ts"
   },
   "keywords": [
     "ghost",
