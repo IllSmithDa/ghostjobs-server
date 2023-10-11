@@ -33,6 +33,8 @@ app.use(expressSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
     sameSite: 'none', 
   },
+  proxy: true,
+  name: 'new_cookie_ghostedon',
   resave: true,
   saveUninitialized: false,
   store:  new pgSession({
