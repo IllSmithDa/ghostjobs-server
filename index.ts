@@ -87,7 +87,7 @@ app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-app.post('/auth/google', 
+app.get('/auth/google', 
   passport.authenticate('google', {
     scope: ['profile', 'email']
   })
