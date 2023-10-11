@@ -32,6 +32,7 @@ app.use(expressSession({
   cookie: {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     sameSite: 'none', 
+    secure: true
   },
   proxy: true,
   name: 'new_cookie_ghostedon',
@@ -41,6 +42,7 @@ app.use(expressSession({
     conString: process.env.DATABASE_URL,
     tableName: 'user_sessions' 
   }),
+  saveUninitialized: true,
 }))
 
 //https://www.passportjs.org/packages/passport-google-oauth20/
