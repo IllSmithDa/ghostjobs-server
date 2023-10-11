@@ -30,7 +30,7 @@ const createSession = (req:any, res:Response, next:NextFunction) => {
 }
 
 const checkSession = (req:any, res:Response, next:NextFunction) => {
-  console.log(req)
+  console.log(req.session)
   if(req.session.user) {
    res.locals.username = req.session.user;
    next();
