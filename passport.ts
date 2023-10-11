@@ -30,7 +30,7 @@ module.exports = (server:Express) => {
     function (req:any, res) {
       // res.status(200).send({ success: true });
       console.log('help' + req.session.user);
-      res.redirect('http://localhost:3000');
+      res.redirect(process.env.CLIENT_URL);
       res.end();
     }
   );
