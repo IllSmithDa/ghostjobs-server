@@ -26,10 +26,12 @@ const port = 5000;
 
 db.connectClient();
 
+
 app.use(expressSession({
   secret: process.env.COOKIE_SECRET,
   cookie: {
     maxAge: 30 * 24 * 60 * 60 * 1000,
+    sameSite: 'none', 
   },
   resave: true,
   saveUninitialized: false,
