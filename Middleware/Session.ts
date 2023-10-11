@@ -11,6 +11,7 @@ const createSession = (req:any, res:Response, next:NextFunction) => {
     cookie: {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       sameSite: 'none', 
+      secure: true,
     },
     name: 'new_cookie_ghostedon',
     resave: true,
