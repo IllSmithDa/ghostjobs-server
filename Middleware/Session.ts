@@ -12,6 +12,7 @@ const createSession = (req:any, res:Response, next:NextFunction) => {
       maxAge: 30 * 24 * 60 * 60 * 1000,
       sameSite: 'none', 
     },
+    name: 'new_cookie_ghostedon',
     resave: true,
     saveUninitialized: true,
     store:  new pgSession({
