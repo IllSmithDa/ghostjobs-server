@@ -26,7 +26,7 @@ const port = 5000;
 
 db.connectClient();
 
-
+app.set('trust proxy', 1) // trust first prox
 app.use(expressSession({
   secret: process.env.COOKIE_SECRET,
   cookie: {
