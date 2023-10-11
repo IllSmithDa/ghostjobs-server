@@ -59,7 +59,7 @@ app.use(expressSession({
       {
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: `${process.env.CLIENT_URL}/auth/google/callback`,
+        callbackURL: `${process.env.SERVER_URL}/auth/google/callback`,
         passReqToCallback: true,
       },
       async function (req:any, accessToken:any, refreshToken:any, profile:any, done:any) {
@@ -87,7 +87,7 @@ app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
-app.get('/auth/google', 
+app.post('/auth/google', 
   passport.authenticate('google', {
     scope: ['profile', 'email']
   })
