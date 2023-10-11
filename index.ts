@@ -49,7 +49,7 @@ app.use(expressSession({
       {
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:5000/auth/google/callback",
+        callbackURL: `${process.env.SERVER_URL}/auth/google/callback`,
         passReqToCallback: true,
       },
       async function (req:any, accessToken:any, refreshToken:any, profile:any, done:any) {
@@ -60,11 +60,11 @@ app.use(expressSession({
           console.log(user.data.username)
           req.session.user = user.data.username;
           // https://stackoverflow.com/questions/26531143/sessions-wont-save-in-node-js-without-req-session-save
-          req.res.redirect('http://localhost:3000')
+          req.res.redirect(process.env.CLIENT_URL)
           // // console.log(req.session)
           // done(null, user)
         } else {
-          req.res.redirect('http://localhost:3000/login-help')
+          req.res.redirect(`${process.env.CLIENT_URL}/login-help`);
         }
       }
     )
