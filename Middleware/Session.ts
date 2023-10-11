@@ -4,6 +4,7 @@ const app = require('..');
 const expressSession = require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
 
+//https://stackoverflow.com/questions/65767024/express-session-not-working-in-production-deployment
 const createSession = (req:any, res:Response, next:NextFunction) => {
   app.use(expressSession({
     secret: process.env.COOKIE_SECRET,
@@ -16,6 +17,7 @@ const createSession = (req:any, res:Response, next:NextFunction) => {
       conString: process.env.DATABASE_URL,
       tableName: 'User_sessions' 
     }),
+    sameSite: 'none', 
   }));
   next();
   // req.session = session;

@@ -9,7 +9,7 @@ export const googleAuth = () => {
   passport.use(new GoogleStrategy({
     clientID: process.env.OATH_CLIENT_GOOGLE_ID,
     clientSecret: process.env.OATH_CLIENT_GOOGLE_SECRET,
-    callbackURL: 'http://localhost:3000',
+    callbackURL: process.env.CLIENT_URL,
   },
   function() {
    console.log('hello');
