@@ -50,6 +50,8 @@ app.use(expressSession({
 }))
 
 //https://www.passportjs.org/packages/passport-google-oauth20/
+//https://stackoverflow.com/questions/55079181/what-is-the-best-practice-to-use-oauth2-react-node-js-and-passport-js-to-authe
+
 //initialize oauth
   app.use(passport.initialize());
   app.use(passport.session());
