@@ -27,6 +27,10 @@ const port = 5000;
 db.connectClient();
 
 app.set('trust proxy', 1) // trust first prox
+
+// https://expressjs.com/en/resources/middleware/session.html
+// https://stackoverflow.com/questions/65767024/express-session-not-working-in-production-deployment
+// https://stackoverflow.com/questions/55500547/express-session-does-not-save-the-passport-user-id-when-hosting-on-heroku
 app.use(expressSession({
   secret: process.env.COOKIE_SECRET,
   cookie: {
@@ -55,7 +59,7 @@ app.use(expressSession({
       {
         clientID: GOOGLE_CLIENT_ID,
         clientSecret: GOOGLE_CLIENT_SECRET,
-        callbackURL: `${process.env.SERVER_URL}/auth/google/callback`,
+        callbackURL: `${process.env.CLIENT_URL}/auth/google/callback`,
         passReqToCallback: true,
       },
       async function (req:any, accessToken:any, refreshToken:any, profile:any, done:any) {

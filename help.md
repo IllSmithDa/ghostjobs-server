@@ -63,3 +63,10 @@ https://65224a7a94794e0008bec647--venerable-begonia-88eaeb.netlify.app/
 16. TS node heroku use
 
 https://stackoverflow.com/questions/34224150/heroku-deploy-using-ts-node
+
+17. Req Session 
+https://expressjs.com/en/resources/middleware/session.html
+
+https://stackoverflow.com/questions/55500547/express-session-does-not-save-the-passport-user-id-when-hosting-on-heroku
+
+https://stackoverflow.com/questions/65767024/express-session-not-working-in-production-deployment
