@@ -9,7 +9,8 @@ const createSession = (req:any, res:Response, next:NextFunction) => {
   app.use(expressSession({
     secret: process.env.COOKIE_SECRET,
     cookie: {
-      maxAge: 30 * 24 * 60 * 60 * 1000
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite: 'none', 
     },
     resave: true,
     saveUninitialized: true,
@@ -17,7 +18,6 @@ const createSession = (req:any, res:Response, next:NextFunction) => {
       conString: process.env.DATABASE_URL,
       tableName: 'User_sessions' 
     }),
-    sameSite: 'none', 
   }));
   next();
   // req.session = session;
