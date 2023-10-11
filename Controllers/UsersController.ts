@@ -195,7 +195,7 @@ const loginUser = async (req: any, res: Response, next: NextFunction) => {
   }
   // next();
   console.log(user.data.username);
-  req.Session.user = user.data.username;
+  req.session.Session.user = user.data.username;
   /// req.session.save();
   res.status(200).send({ username: user.data.username });
   res.end();
