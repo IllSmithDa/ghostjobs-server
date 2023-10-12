@@ -1,5 +1,5 @@
 // @ts-nocheck 
-const User = require("../Models/User");
+const {User} = require("../Models/User");
 
 const sgMail = require('@sendgrid/mail');
 

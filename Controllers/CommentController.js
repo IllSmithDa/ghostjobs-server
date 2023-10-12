@@ -1,5 +1,5 @@
 // @ts-nocheck 
-const Comment = require('../Models/Comment');
+const {Comment} = require('../Models/Comment');
 
 
 const createComment = async (req, res) => {

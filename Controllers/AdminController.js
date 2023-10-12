@@ -1,5 +1,5 @@
 // @ts-nocheck 
-const User = require('../Models/User');
+const {User} = require('../Models/User');
 
 const checkAdmin = async (req, res) => {
   const {username} = req.params;
