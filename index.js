@@ -97,6 +97,9 @@ app.listen(process.env.PORT || 5000, () => {
 
 app.all('*', (req, res, next) => {
   res.header("Cache-Control", "no-store,no-cache,must-revalidate");
+  res.header("Access-Control-Allow-Headers", ["Content-Type","X-Requested-With","X-HTTP-Method-Override","Accept"]);
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
+  res.header("Access-Control-Allow-Credentials", true);
   next();
 })
 
