@@ -7,7 +7,7 @@ import User from './Models/User';
 const cors = require('cors');
 const corsOptions = require('./config/corsOption');
 const expressSession = require('express-session');
-const routes = require('./routes/routes');
+// const routes = require('./routes/routes');
 const pgSession = require('connect-pg-simple')(expressSession);
 const passport = require("passport");
 const passportAuth = require('./passport');
