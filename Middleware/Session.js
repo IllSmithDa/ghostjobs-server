@@ -1,11 +1,10 @@
 // @ts-nocheck 
-import { NextFunction, Request, Response } from "express";
 const app = require('..');
 const expressSession = require('express-session');
 const pgSession = require('connect-pg-simple')(expressSession);
 
 //https://stackoverflow.com/questions/65767024/express-session-not-working-in-production-deployment
-const createSession = (req:any, res:Response, next:NextFunction) => {
+const createSession = (req, res, next) => {
   app.use(expressSession({
     secret: process.env.COOKIE_SECRET,
     cookie: {
@@ -30,7 +29,7 @@ const createSession = (req:any, res:Response, next:NextFunction) => {
   // }
 }
 
-const checkSession = (req:any, res:Response, next:NextFunction) => {
+const checkSession = (req, res, next) => {
   console.log(req.session)
   if(req.session.user) {
    res.locals.username = req.session.user;

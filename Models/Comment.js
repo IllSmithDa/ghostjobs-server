@@ -10,26 +10,16 @@ const { client } = require('../db');
   score VAR CHAR (10000) DEFAULT 0,
   replies J
 */
-interface Reply {
-  id: string,
-  commentIdRef: string,
-  username: string,
-  userImage: string,
-  score: number,
-  replyText: string,
-  storyTitle: string,
-  storyId: string,
-}
 
-export default class Comment {
-  id: string;
-  username: string;
-  userImage: string;
-  text: string;
-  storyId: string;
-  score: number;
+class Comment {
+  id;
+  username;
+  userImage;
+  text;
+  storyId;
+  score;
 
-  constructor(  id: string, text: string, username: string, storyId: string, imageUrl ?: string,  score = 0) {
+  constructor(  id, text, username, storyId, imageUrl,  score = 0) {
     this.id = id;
     this.text = text;
     this.username = username;
@@ -38,7 +28,7 @@ export default class Comment {
     this.userImage = imageUrl ??= '';
     this.score = score
   }
-  static async createComment(username: string, storytitle: string, text: string, storyId: string, commentRefId ?:string, isReply=false, userimage ?: string) {
+  static async createComment(username, storytitle, text, storyId, commentRefId, isReply=false, userimage) {
 
     try {
       console.log(text);
@@ -61,11 +51,11 @@ export default class Comment {
       }
     } catch (err){
       console.log(err);
-      return { err: (err as Error), success: false };
+      return { err: (err ), success: false };
     }
   }
 
-  static async getMyComments(username: string, offset: number, limit: number) {
+  static async getMyComments(username, offset, limit) {
     try {
       const query = {
         text: `SELECT * FROM comments WHERE username = $1  ORDER BY created_at DESC LIMIT $2 OFFSET $3`,
@@ -81,7 +71,7 @@ export default class Comment {
     }
   }
 
-  static async getComment(commentId: string) {
+  static async getComment(commentId) {
     try {
       const query = {
         text: `SELECT * FROM comments WHERE id = $1`,
@@ -97,7 +87,7 @@ export default class Comment {
     }
   }
 
-  static async getReply(commentId: string, replyId: string) {
+  static async getReply(commentId, replyId) {
     try {
       const query = {
         text: `SELECT * FROM comments WHERE id = $1`,
@@ -105,7 +95,7 @@ export default class Comment {
       }
       const res = await client.query(query);
       const replies = res.rows[0].replies;
-      let reply = replies.filter((reply:Reply) => replyId === reply.id)[0];
+      let reply = replies.filter((reply) => replyId === reply.id)[0];
       console.log(reply) 
       return {
         data: reply,
@@ -116,7 +106,7 @@ export default class Comment {
     }
   }
 
-  static async getComments(storyId: string, offset: number, limit: number) {
+  static async getComments(storyId, offset, limit) {
     try {
       const query = {
         text: `SELECT * FROM comments WHERE storyId = $1 AND isReply = $2 ORDER BY created_at DESC LIMIT $3 OFFSET $4`,
@@ -131,7 +121,7 @@ export default class Comment {
       return { err: 'could not retrieve comments', success: false};
     }
   }
-  static async deleteComment(commentId: string) {
+  static async deleteComment(commentId) {
     try {
       const query = {
         text: `DELETE FROM comments WHERE id = $1`,
@@ -142,11 +132,11 @@ export default class Comment {
         return { success: true }
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
     
   }
-  static async editComment(commentId: string, editText: string) {
+  static async editComment(commentId, editText) {
     try {
       const query = {
         text: `
@@ -157,21 +147,21 @@ export default class Comment {
       await client.query(query);
       return { success: true }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
   /*
   interface Reply {
-    id: string,
-    commentId: string,
-    username: string,
-    userImage: string,
-    score: number,
-    replyText: string
+    id,
+    commentId,
+    username,
+    userImage,
+    score,
+    replyText
   }
   */
 
-  static async addReply(commentId: string, reply:Reply) {
+  static async addReply(commentId, reply) {
     try {
       // update reply that will be addeed in the array under comments, with a reference id to the individual comment so when you delete, both can be delted at once
 
@@ -197,17 +187,17 @@ export default class Comment {
         return { success: true, reply };
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
-  static async editReply(commentRefId: string, replyId:string, editText: string) {
+  static async editReply(commentRefId, replyId, editText) {
     try {
       const getReplies = {
         text: `SELECT replies from comments WHERE id = $1`,
         values: [commentRefId]
       }
       const replies = (await client.query(getReplies)).rows[0].replies;
-      const updatedReplies = replies.forEach((reply:Reply) => {
+      const updatedReplies = replies.forEach((reply) => {
         if (reply.id === replyId) reply.replyText = editText
       })
 
@@ -227,10 +217,10 @@ export default class Comment {
       await client.query(query);
       return { success: true }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
-  static async deleteReplyV1(commentRefId: string, replyId: string) {
+  static async deleteReplyV1(commentRefId, replyId) {
     try {
       // remove reply from reply listing
       const getReplies = {
@@ -238,7 +228,7 @@ export default class Comment {
         values: [commentRefId]
       }
       const replies = (await client.query(getReplies)).rows[0].replies;
-      const filteredReplies = replies.filter((reply:Reply) => reply.id !== replyId )
+      const filteredReplies = replies.filter((reply) => reply.id !== replyId )
       const updateCommentquery = {
         text: `
           UPDATE comments SET replies = $1 WHERE id = $2
@@ -251,10 +241,10 @@ export default class Comment {
         return { success: true };
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
-  static async deleteReplyV2(commentRefId: string, replyId: string) {
+  static async deleteReplyV2(commentRefId, replyId) {
     try {
       const query = {
         text: `DELETE FROM comments WHERE id = $1`,
@@ -269,7 +259,7 @@ export default class Comment {
           values: [commentRefId]
         }
         const replies = (await client.query(getReplies)).rows[0].replies;
-        const filteredReplies = replies.filter((reply:Reply) => reply.commentIdRef !== commentRefId )
+        const filteredReplies = replies.filter((reply) => reply.commentIdRef !== commentRefId )
         const updateCommentquery = {
           text: `
             UPDATE comments SET replies = $1 WHERE id = $2
@@ -284,7 +274,11 @@ export default class Comment {
 
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
+}
+
+module.exports = {
+  Comment
 }

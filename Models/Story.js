@@ -1,21 +1,21 @@
 const { client } = require('../db');
 
 const storyReactions = {'like': 0, 'heart': 0, 'misleading': 0, 'funny':0, 'spam': 0, 'angry': 0, 'confused': 0, 'dislike': 0, 'sad': 0};
-export default class Story {
-  username: string;
-  storyTitle: string;
-  text: string;
-  tags: string[];
+class Story {
+  username;
+  storyTitle;
+  text;
+  tags;
   
 
-  constructor(text: string, username: string, storyTitle: string, tags: string[]  ) {
+  constructor(text, username, storyTitle, tags) {
     this.username = username;
     this.storyTitle = storyTitle;
     this.text = text;
     this.tags = tags;
   }
   //https://node-postgres.com/features/queries
-  static async createStory(username: string, title: string, stringTags: string) {
+  static async createStory(username, title, stringTags) {
     console.log(storyReactions.like)
     try {
       const query = { 
@@ -27,11 +27,11 @@ export default class Story {
       console.log(res);
       return {data: res.rows[0], success: true };
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
 
-  static async getStory(id:string) {
+  static async getStory(id) {
     try {
       const query = {
         text: `
@@ -43,12 +43,12 @@ export default class Story {
       console.log(res?.rows[0]);
       return res?.rows[0];
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
 
   //https://www.commandprompt.com/education/how-to-sort-table-data-by-date-in-postgresql/
-  static async getStoriesByDate(offset: number, limit: number) {
+  static async getStoriesByDate(offset, limit) {
     try {
       const query = {
         text: `
@@ -59,11 +59,11 @@ export default class Story {
       const res = await client.query(query);
       return { data: res.rows, success: true }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
  
-  static async getMyStories(username:string, offset: number, limit: number) {
+  static async getMyStories(username, offset, limit) {
     try {
       const query = {
         text: `
@@ -75,11 +75,11 @@ export default class Story {
       console.log(res?.rows)
       return { data: res.rows, success: true }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
 
-  static async deleteStoryById(storyId: string) {
+  static async deleteStoryById(storyId) {
     try {
       const query = {
         text: `
@@ -91,12 +91,12 @@ export default class Story {
       const res = await client.query(query);
       return { data: res.rows, success: true }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
 
   // /https://www.postgresql.org/docs/current/sql-update.html
-  static async updateStory (storyId: string, updatedTitle: string, tags: string) {
+  static async updateStory (storyId, updatedTitle, tags) {
     try {
       // console.log('hello 2')
       const query = {
@@ -109,12 +109,12 @@ export default class Story {
       console.log('reached here')
       return { success: true }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
 
   // https://stackoverflow.com/questions/19471756/how-to-make-a-like-search-in-postgresql-and-node-js
-  static async searchStory (searchParams: string, limit: number, offset: number) {
+  static async searchStory (searchParams, limit, offset) {
     try{
       const query = {
         text: `
@@ -127,7 +127,7 @@ export default class Story {
       console.log(res);
       return { data: res.rows, success: true }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
 
@@ -145,7 +145,7 @@ export default class Story {
         success: true,
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     } 
   }
 
@@ -168,7 +168,11 @@ export default class Story {
         success: true,
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
      }
   }
+}
+
+module.exports = {
+  Story
 }

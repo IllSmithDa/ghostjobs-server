@@ -1,14 +1,8 @@
 const { client } = require('../db');
-import { Reply } from '../Types';
-export interface Like {
-  id: string,
-  score: 0 | 1 | -1,
-  commentId: string,
-  username: string,
-}
-export default class CommentLike {
 
-  static async getReactions (username: string) {
+class CommentLike {
+
+  static async getReactions (username) {
     try {
       const query = {
         text: `SELECT * from commentlikes WHERE username = $1`,
@@ -26,11 +20,11 @@ export default class CommentLike {
         }
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
 
-  static async updateCommentScore (commentId: string, score: number) {
+  static async updateCommentScore (commentId, score) {
     try {
       const query = { 
         text: `SELECT * from comments WHERE id = $1`,
@@ -54,11 +48,11 @@ export default class CommentLike {
         return { success: false }
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
 
-  static async addLikeDislike (commentId: string, username: string, score: 1 | -1, storyId: string) {
+  static async addLikeDislike (commentId, username, score, storyId) {
     try {
       const query = {
         text: ` INSERT INTO commentlikes(commentId, username, score, storyId) VALUES($1, $2, $3, $4) RETURNING *
@@ -80,11 +74,11 @@ export default class CommentLike {
         }
       }
     } catch (err) {
-      return { err: (err as Error), success: false };
+      return { err: (err ), success: false };
     }
   }
 
-  static async updateReplyScore (replyId: string, commentRefId: string, score: number) {
+  static async updateReplyScore (replyId, commentRefId, score) {
     try {
       console.log(`updating reply score var: ${replyId}, ${commentRefId}, ${score}`)
       const getReplies = {
@@ -94,7 +88,7 @@ export default class CommentLike {
       console.log(`id comment: ${commentRefId}, ${replyId} ${score}`)
       const replies = (await client.query(getReplies)).rows[0].replies;
       console.log(`found replies ${replies}`);
-      replies.forEach((reply:Reply) => {
+      replies.forEach((reply) => {
         if (reply.id === replyId) reply.score = score
       })
       console.log(`updated replies ${replies[0].score}`);
@@ -121,10 +115,10 @@ export default class CommentLike {
         }
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
-  static async removeLikeDiskLike (commentId: string, username: string, commentRefId ?: string, isReply=false) {
+  static async removeLikeDiskLike (commentId, username, commentRefId, isReply=false) {
     try {
       const query = {
         text: `
@@ -150,8 +144,12 @@ export default class CommentLike {
       console.log('does not exist ')
       return { success: true }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
 
   }
+}
+
+module.exports = {
+  CommentLike,
 }

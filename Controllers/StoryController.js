@@ -1,7 +1,5 @@
 // @ts-nocheck 
-import { Request, Response } from "express";
-import Story from "../Models/Story";
-import { S3 } from "aws-sdk";
+const { Story } = require("../Models/Story");
 
 const aws = require('aws-sdk');
 const { S3Client, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } = require("@aws-sdk/client-s3");
@@ -24,15 +22,15 @@ const tags = {like: 0, heart: 0, misleading: 0, funny:0, spam: 0, angry: 0, conf
 const stringTags = JSON.stringify(tags);
 
 
-const parseTags = (stories: Story[]) => {
-  stories.forEach((story:Story) => {
-    const tags: string = (story.tags as unknown as string);
+const parseTags = (stories) => {
+  stories.forEach((story) => {
+    const tags = (story.tags);
     story.tags = JSON.parse(tags);
   })
   return stories;
 }
 
-const postStory = async (req: Request, res:Response) => {
+const postStory = async (req, res) => {
   const { story, title, username, selectedTag} = req.body;
 
   try {
@@ -52,12 +50,12 @@ const postStory = async (req: Request, res:Response) => {
       }
     }
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
 
 // https://stackoverflow.com/questions/36942442/how-to-get-response-from-s3-getobject-in-node-js
-function getObject (Bucket:string, Key:string) {
+function getObject (Bucket, Key) {
   return new Promise(async (resolve, reject) => {
     const getObjectCommand = new GetObjectCommand({ Bucket, Key })
 
@@ -66,14 +64,14 @@ function getObject (Bucket:string, Key:string) {
   
       // Store all of data chunks returned from the response data stream 
       // into an array then use Array#join() to use the returned contents as a String
-      let responseDataChunks: string[] = []
+      let responseDataChunks = []
 
       // Handle an error while streaming the response body
-      response.Body.once('error', (err: Error) => reject(err))
+      response.Body.once('error', (err) => reject(err))
   
       // Attach a 'data' listener to add the chunks of data to our array
       // Each chunk is a Buffer instance
-      response.Body.on('data', (chunk:any) => responseDataChunks.push(chunk))
+      response.Body.on('data', (chunk) => responseDataChunks.push(chunk))
   
       // Once the stream has no more data, join the chunks into a string and return the string
       response.Body.once('end', () => resolve(responseDataChunks.join('')))
@@ -85,7 +83,7 @@ function getObject (Bucket:string, Key:string) {
 }
 
 //https://docs.aws.amazon.com/AWSJavaScriptSDK/v3/latest/client/s3/command/GetObjectCommand/
-const getStory = async (req: Request, res: Response) => {
+const getStory = async (req, res) => {
 
   try{
     const { storyId } = req.params;
@@ -98,7 +96,7 @@ const getStory = async (req: Request, res: Response) => {
         Key: response.id// path to the object you're looking for
       }
       // const getObjectCommand = new GetObjectCommand(getParams);
-      const result:any = await getObject(getParams.Bucket as string, getParams.Key);
+      const result = await getObject(getParams.Bucket, getParams.Key);
       // console.log(result);
       res.status(200).json({
         text: result,
@@ -106,10 +104,10 @@ const getStory = async (req: Request, res: Response) => {
       })
     }
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
-const getStoryText = async (req: Request, res: Response) => {
+const getStoryText = async (req, res) => {
   try{
     const { storyId } = req.params;
       const getParams = {
@@ -117,16 +115,16 @@ const getStoryText = async (req: Request, res: Response) => {
         Key: storyId// path to the object you're looking for
       }
       // const getObjectCommand = new GetObjectCommand(getParams);
-      const result:any = await getObject(getParams.Bucket as string, getParams.Key);
+      const result = await getObject(getParams.Bucket, getParams.Key);
       console.log(result);
       res.status(200).json({
         text: result
       })
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
-const storiesByDate = async (req: Request, res: Response) => {
+const storiesByDate = async (req, res) => {
     let { offset, limit } = req.params;
   try {
     // console.log(offset)
@@ -137,10 +135,10 @@ const storiesByDate = async (req: Request, res: Response) => {
       })
     }
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
-const getMyStories = async (req:Request, res: Response) => {
+const getMyStories = async (req, res) => {
   const { username, offset, limit } = req.params;
   // console.log(`story username: ${username}`)
   try {
@@ -155,11 +153,11 @@ const getMyStories = async (req:Request, res: Response) => {
       })
     }
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
 
-const deleteStory = async (req: Request, res: Response) => {
+const deleteStory = async (req, res) => {
   const { storyId } = req.params;
   console.log(`story id: ${storyId}`)
   try {
@@ -183,11 +181,11 @@ const deleteStory = async (req: Request, res: Response) => {
       }
     }
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
 
-const updateStory = async (req: Request, res: Response ) => {
+const updateStory = async (req, res ) => {
   const {storyId, title, text, selectedTag} = req.body;
   console.log(req.body);
   try {
@@ -211,11 +209,11 @@ const updateStory = async (req: Request, res: Response ) => {
       }
     }
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
 
-const countStories = async (req: Request, res: Response) => {
+const countStories = async (req, res) => {
   try {
     console.log('what')
     const result = await Story.countStories();
@@ -225,11 +223,11 @@ const countStories = async (req: Request, res: Response) => {
       res.status(401).json({ err: 'Could not fetch data from the database' })
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message })
+    res.status(500).json({ err: (err ).message })
   }
 }
 
-const randomStory = async (req: Request, res: Response) => {
+const randomStory = async (req, res) => {
   try {
     const { offset } = req.params;
     const result = await Story.randomStory();
@@ -239,7 +237,7 @@ const randomStory = async (req: Request, res: Response) => {
       res.status(401).json({ err: 'Could not fetch data from the database' })
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message })
+    res.status(500).json({ err: (err ).message })
   }
 }
 

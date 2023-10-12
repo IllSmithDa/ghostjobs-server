@@ -1,11 +1,9 @@
 // @ts-nocheck 
 const passport = require("passport");
-import { Express} from 'express';
-import { Request, Response } from 'express-serve-static-core';
 
 
-module.exports = (server:Express) => {
-  // const session = function (req: any, res:Response) {
+module.exports = (server) => {
+  // const session = function (req, res) {
   //   var temp = req.session.passport; // {user: 1}
   //   req.session.regenerate(function(err){
   //       //req.session.passport is now undefined
@@ -27,7 +25,7 @@ module.exports = (server:Express) => {
     passport.authenticate('google', {
       failureRedirect: '/failed',
     }),
-    function (req:any, res) {
+    function (req, res) {
       // res.status(200).send({ success: true });
       console.log('help' + req.session.user);
       res.redirect(process.env.CLIENT_URL);
@@ -38,10 +36,10 @@ module.exports = (server:Express) => {
 }
 
 
-passport.serializeUser((user:any, done:any) => {
+passport.serializeUser((user, done) => {
   done(null, user);
 });
 
-passport.deserializeUser((user:any, done:any) => {
+passport.deserializeUser((user, done) => {
   done(null, user);
 });

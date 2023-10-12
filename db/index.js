@@ -1,11 +1,11 @@
 require('dotenv').config();
-import { Pool, Client } from 'pg'
+const { Pool, Client } = require('pg');
  
 const pool = new Pool()
+let client = new Client((process.env.DATABASE_URL));
  
-export const client = new Client((process.env.DATABASE_URL as string));
- 
-export const connectClient = async () => {
+const connectClient = async () => {
+  client = new Client((process.env.DATABASE_URL));
   await client.connect();
 
   // await client.query(
@@ -167,6 +167,11 @@ export const connectClient = async () => {
   //   ADD COLUMN commentId VARCHAR (255)
   //   `
   // )
+}
+
+module.exports = {
+  client,
+  connectClient,
 }
 //      FOREIGN KEY (username) REFERENCES Users,
 

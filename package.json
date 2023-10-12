@@ -2,11 +2,10 @@
   "name": "ghostjobs-api",
   "version": "1.0.0",
   "description": "rest api server for ghost-jobs",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "start": "nodemon index.ts",
-    "build": "tsc"
+    "start": "nodemon index.js"
   },
   "keywords": [
     "ghost",

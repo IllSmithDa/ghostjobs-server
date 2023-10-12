@@ -1,8 +1,7 @@
 // @ts-nocheck 
-import { Request, Response } from "express";
-import User from "../Models/User";
+const User = require('../Models/User');
 
-const checkAdmin = async (req: Request, res: Response) => {
+const checkAdmin = async (req, res) => {
   const {username} = req.params;
   try {
     const result = await User.checkAdmin(username);
@@ -10,11 +9,11 @@ const checkAdmin = async (req: Request, res: Response) => {
       admin: result
     })
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message, success: false })
+    res.status(500).json({ err: (err ).message, success: false })
   }
 }
 
-const setAdmin = async (req: Request, res: Response) => {
+const setAdmin = async (req, res) => {
   const { username, adminStatus} = req.body;
   try {
     const result = await User.setAdminStatus(adminStatus, username);
@@ -26,11 +25,11 @@ const setAdmin = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message, success: false })
+    res.status(500).json({ err: (err ).message, success: false })
   }
 }
 
-const strikeUser = async (req: Request, res: Response) => {
+const strikeUser = async (req, res) => {
   const { username, reportId } = req.body;
   try {
     const result = await User.strikeUser(username, reportId);
@@ -42,11 +41,11 @@ const strikeUser = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message, success: false })
+    res.status(500).json({ err: (err ).message, success: false })
   }
 }
 
-const checkUserBan = async (req: Request, res: Response) => {
+const checkUserBan = async (req, res) => {
   const {username} = req.params;
   try {
     const result = await User.checkBan(username);
@@ -58,11 +57,11 @@ const checkUserBan = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message, success: false })
+    res.status(500).json({ err: (err ).message, success: false })
   }
 }
 
-const banUser = async (req: Request, res: Response) => {
+const banUser = async (req, res) => {
   const {username} = req.body;
   try {
     const result = await User.setBan(username, true);
@@ -74,11 +73,11 @@ const banUser = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message, success: false })
+    res.status(500).json({ err: (err ).message, success: false })
   }
 }
 
-const setUserBan = async (req: Request, res: Response) => {
+const setUserBan = async (req, res) => {
   const {username, banStatus} = req.body;
   try {
     const result = await User.setBan(username, banStatus);
@@ -90,7 +89,7 @@ const setUserBan = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message, success: false })
+    res.status(500).json({ err: (err ).message, success: false })
   }
 }
 

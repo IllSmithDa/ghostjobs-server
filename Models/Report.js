@@ -1,13 +1,13 @@
-import { client } from "../db";
+const { client } = require("../db");
 
-export default class Report {
-  id:string;
-  reportType: string;
-  contentId: string;
-  username: string;
-  created_at: string;
+class Report {
+  id;
+  reportType;
+  contentId;
+  username;
+  created_at;
 
-  constructor(id: string, username: string, reportType: string, contentId: string, created_at: string) {
+  constructor(id, username, reportType, contentId, created_at) {
     this.username = username;
     this.id = id;
     this.reportType = reportType;
@@ -15,7 +15,7 @@ export default class Report {
     this.created_at = created_at
   }
 
-  static async createReport (username: string, reportType: string, contentId: string, offense: string, commentId ?: string) {
+  static async createReport (username, reportType, contentId, offense, commentId) {
     try {
       const reportQuery = {
         text: `
@@ -35,10 +35,10 @@ export default class Report {
         success: false,
       }
     } catch (err) {
-      return { err: (err as Error), success: false };
+      return { err: (err ), success: false };
     }
   }
-  static async getReport (reportId: string) {
+  static async getReport (reportId) {
     try {
       const reportQuery = {
         text: `
@@ -57,10 +57,10 @@ export default class Report {
         success: false,
       }
     } catch (err) {
-      return { err: (err as Error), success: false };
+      return { err: (err ), success: false };
     }
   }
-  static async deleteReport (reportId: string) {
+  static async deleteReport (reportId) {
     try {
       const reportQuery = {
         text: `
@@ -78,11 +78,11 @@ export default class Report {
         success: false,
       }
     } catch (err) {
-      return { err: (err as Error), success: false };
+      return { err: (err ), success: false };
     }
   }
 
-  static async getReports(offset: number, limit: number) {
+  static async getReports(offset, limit) {
     try {
       const query = {
         text: `
@@ -94,7 +94,11 @@ export default class Report {
       // console.log(res?.rows)
       return { data: res.rows, success: true }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err ).message, success: false }
     }
   }
+}
+
+module.exports = {
+  Report
 }

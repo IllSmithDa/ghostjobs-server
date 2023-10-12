@@ -1,9 +1,8 @@
 // @ts-nocheck 
-import { Request, Response } from "express";
-import Comment from "../Models/Comment";
+const Comment = require('../Models/Comment');
 
 
-const createComment = async (req: Request, res: Response) => {
+const createComment = async (req, res) => {
   const { username, storyTitle, text, storyId } = req.body;
   console.log(username)
   try {
@@ -19,11 +18,11 @@ const createComment = async (req: Request, res: Response) => {
       }
     }
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
 
-const getComments = async (req: Request, res: Response) => {
+const getComments = async (req, res) => {
   const {storyId, offset, limit} = req.params;
   try {
     if (storyId) {
@@ -36,11 +35,11 @@ const getComments = async (req: Request, res: Response) => {
       }
     }
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
 
-const getComment = async (req: Request, res: Response) => {
+const getComment = async (req, res) => {
   const {commentId} = req.params;
   try {
     const result = await Comment.getComment(commentId);
@@ -53,11 +52,11 @@ const getComment = async (req: Request, res: Response) => {
       err: 'Error: Could not connect with database'
     }
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
 
-const getReply = async (req: Request, res: Response) => {
+const getReply = async (req, res) => {
   const {commentId, replyId} = req.params;
   try {
     const result = await Comment.getReply(commentId, replyId);
@@ -70,11 +69,11 @@ const getReply = async (req: Request, res: Response) => {
       err: 'Error: Could not connect with database'
     }
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
 
-const getMyComments = async (req: Request, res: Response) => {
+const getMyComments = async (req, res) => {
   const {username, offset, limit} = req.params;
   try {
     const result = await Comment.getMyComments(username, Number(offset), Number(limit));
@@ -85,12 +84,12 @@ const getMyComments = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message, success: false })
+    res.status(500).json({ err: (err ).message, success: false })
   }
 }
 
 
-const deleteComment = async (req: Request, res: Response) => {
+const deleteComment = async (req, res) => {
   const { commentId, isReply, commentRefId } = req.body;
   try {
     console.log(commentId);
@@ -106,28 +105,18 @@ const deleteComment = async (req: Request, res: Response) => {
       })
     }
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
-interface Reply {
-  id: string,
-  commentIdRef: string,
-  username: string,
-  userImage: string,
-  score: number,
-  replyText: string,
-  storyTitle: string,
-  storyId: string,
-}
 
-const addReplyV1 = async (req: Request, res: Response) => {
+const addReplyV1 = async (req, res) => {
   const {commentId, replyUsername, replyText, userImage, storyTitle, storyId, score } = req.body;
   try {
     // https://dev.to/rahmanfadhil/how-to-generate-unique-id-in-javascript-1b13
     const newId = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
     // const commentRes = await Comment.createComment(replyUsername, storyTitle,  replyText, storyId, commentId, true);
     // console.log(commentRes.data.id);
-    const reply:Reply = {
+    const reply = {
       id: newId.toString(),
       commentIdRef: commentId,
       username: replyUsername,
@@ -147,18 +136,17 @@ const addReplyV1 = async (req: Request, res: Response) => {
     }
     console.log(result);
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
 
-
-const addReplyV2 = async (req: Request, res: Response) => {
+const addReplyV2 = async (req, res) => {
   const {commentId, replyUsername, replyText, userImage, storyTitle, storyId, score } = req.body;
   try {
     // https://dev.to/rahmanfadhil/how-to-generate-unique-id-in-javascript-1b13
     const commentRes = await Comment.createComment(replyUsername, storyTitle,  replyText, storyId, commentId, true);
     console.log(commentRes.data.id);
-    const reply:Reply = {
+    const reply = {
       id: commentRes.data.id,
       commentIdRef: commentId,
       username: replyUsername,
@@ -178,11 +166,11 @@ const addReplyV2 = async (req: Request, res: Response) => {
     }
     console.log(result);
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
 
-const deleteReply = async (req: Request, res: Response) => {
+const deleteReply = async (req, res) => {
   const {commentRefId, replyId} = req.body;
   try {
     const result = await Comment.deleteReplyV1(commentRefId, replyId)
@@ -192,27 +180,27 @@ const deleteReply = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
 
 
-const editComment = async (req: Request, res: Response) => {
+const editComment = async (req, res) => {
   const {commentId, editedText} = req.body;
     try{
 
   } catch(err) {
-    res.status(500).json({ err: (err as Error).message, success: false })
+    res.status(500).json({ err: (err ).message, success: false })
   }
 }
 
-const likeComment = async (req: Request, res: Response) => {
+const likeComment = async (req, res) => {
   const { score, username, commentId } = req.body;
   try {
     // https://dev.to/rahmanfadhil/how-to-generate-unique-id-in-javascript-1b13
   
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   } 
 }
 

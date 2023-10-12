@@ -1,9 +1,9 @@
 // @ts-nocheck 
-import * as db from './db';
-import express from 'express';
-import dotenv from 'dotenv';
-import bodyParser from 'body-parser';
-import User from './Models/User';
+const {client, connectClient} = require('./db');
+const express =  require('express');
+const dotenv =  require('dotenv');
+const bodyParser =  require('body-parser');
+const User =  require('./Models/User');
 const cors = require('cors');
 const corsOptions = require('./config/corsOption');
 const expressSession = require('express-session');
@@ -15,16 +15,17 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GOOGLE_CLIENT_ID = process.env.OATH_CLIENT_GOOGLE_ID;
 const GOOGLE_CLIENT_SECRET = process.env.OATH_CLIENT_GOOGLE_SECRET;
 
+connectClient();
+client.connect();
 
 dotenv.config();
-const app: any = express();
+const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
 const port = 5000;
 
-db.connectClient();
 
 app.set('trust proxy', 1) // trust first prox
 
@@ -64,7 +65,7 @@ app.use(expressSession({
         callbackURL: `${process.env.SERVER_URL}/auth/google/callback`,
         passReqToCallback: true,
       },
-      async function (req:any, accessToken:any, refreshToken:any, profile:any, done:any) {
+      async function (req, accessToken, refreshToken, profile, done) {
         const email = profile.emails[0].value;
         const user = await User.findUserbyEmail(email);
         if (user.success) 
@@ -95,5 +96,4 @@ app.get('/auth/google',
   })
 );
 
-// routes(app);
-export default app;
+routes(app);

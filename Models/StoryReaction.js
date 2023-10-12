@@ -2,19 +2,19 @@ const { client } = require('../db');
 
 const storyReactions = {'like': 0, 'heart': 0, 'misleading': 0, 'funny':0, 'spam': 0, 'angry': 0, 'confused': 0, 'dislike': 0, 'sad': 0};
 
-export default class StoryReaction {
-  username: string;
-  storyId: string;
-  reaction: 'like'|'heart'|'misleading'|'funny'|'spam'|'angry'|'confuse';
+class StoryReaction {
+  username;
+  storyId;
+  reaction;
 
 
-  constructor(username: string, storyId: string, reaction: 'like'|'heart'|'misleading'|'funny'|'spam'|'angry'|'confuse', ) {
+  constructor(username, storyId, reaction) {
     this.username = username;
     this.storyId = storyId;
     this.reaction = reaction;
   }
 
-  static async updateReactionScore (storyId: string, newReaction:string, reactionRemove : string) {
+  static async updateReactionScore (storyId, newReaction, reactionRemove ) {
     try {
       const storyQuery = {
         text: `SELECT reactions FROM stories WHERE id=$1`,
@@ -50,11 +50,11 @@ export default class StoryReaction {
       }
       
     } catch (err) {
-      return { err: (err as Error).message, success: false};
+      return { err: (err ).message, success: false};
     }
   }
 
-  static async createReaction(username: string, storyId: string, storyTitle: string, storyAuthor: string, newReaction: string, oldReaction: string) {
+  static async createReaction(username, storyId, storyTitle, storyAuthor, newReaction, oldReaction) {
     try {
       const query = {
         text: 
@@ -78,10 +78,10 @@ export default class StoryReaction {
         }
       }
     } catch(err) {
-      return { err: (err as Error).message, success: false};
+      return { err: (err ).message, success: false};
     }
   }
-  static async getMyStoryReaction(storyId: string, username: string) {
+  static async getMyStoryReaction(storyId, username) {
     try {
       const query = {
         text: `SELECT * FROM reactions WHERE storyId = $1 AND username = $2`,
@@ -90,12 +90,12 @@ export default class StoryReaction {
       const res = await client.query(query);
       return res.rows[0];
     } catch(err) {
-      return { err: (err as Error).message, success: false };
+      return { err: (err ).message, success: false };
     }
   }
   // https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-update/
   // https://www.techonthenet.com/postgresql/and_or.php
-  static async updateReaction(username: string, storyId: string, reaction: 'like'|'heart'|'misleading'|'funny'|'spam'|'angry'|'confuse' ) {
+  static async updateReaction(username, storyId, reaction ) {
 
     try {
       const query ={
@@ -105,11 +105,11 @@ export default class StoryReaction {
       const res = await client.query(query);
       return {data: res.rows[0], success: true };
     } catch(err) {
-      return { err: (err as Error).message, success: false };
+      return { err: (err ).message, success: false };
     }
   }
   // https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-delete/
-  static async removeReaction(storyId: string, username: string, removeOnly = true) {
+  static async removeReaction(storyId, username, removeOnly = true) {
     try {
 
       console.log()
@@ -135,11 +135,11 @@ export default class StoryReaction {
         }
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false };
+      return { err: (err ).message, success: false };
     }
   }
   
-  static async getStoryReactions(username: string, limit: number, offset: number) {
+  static async getStoryReactions(username, limit, offset) {
     try {
       const query = {
         text: `SELECT * FROM reactions WHERE username = $1 ORDER BY created_at DESC LIMIT $2 OFFSET $3`,
@@ -152,8 +152,11 @@ export default class StoryReaction {
         success: true
       }
     } catch(err) {
-      return { err: (err as Error).message, success: false };
+      return { err: (err ).message, success: false };
     }
   }
 }
 
+module.exports = {
+  StoryReaction
+}

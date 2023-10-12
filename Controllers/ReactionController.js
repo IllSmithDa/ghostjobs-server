@@ -1,8 +1,7 @@
 // @ts-nocheck 
-import { Request, Response } from "express";
-import CommentLike from "../Models/CommentLIke";
+const {CommentLike} = require("../Models/CommentLIke");
 
-const addCommentScore = async (req: Request, res: Response) => {
+const addCommentScore = async (req, res) => {
   try {
     const { commentId, username, score, storyId } = req.body;
     const removeOld = await CommentLike.removeLikeDiskLike(commentId, username);
@@ -22,11 +21,11 @@ const addCommentScore = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch(err) {
-    res.status(500).json({ err: (err as Error).message})
+    res.status(500).json({ err: (err ).message})
   }
 }
 
-const removeCommentScore = async (req: Request, res: Response) => {
+const removeCommentScore = async (req, res) => {
   try {
     const { commentId, username, score } = req.body;
     const removeOld = await CommentLike.removeLikeDiskLike(commentId, username);
@@ -38,10 +37,10 @@ const removeCommentScore = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch(err) {
-    res.status(500).json({ err: (err as Error).message})
+    res.status(500).json({ err: (err ).message})
   } 
 }
-const geCommentReactions = async (req: Request, res: Response) => {
+const geCommentReactions = async (req, res) => {
   try {
     const { username }= req.params;
     const result = await CommentLike.getReactions(username);
@@ -54,11 +53,11 @@ const geCommentReactions = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message})
+    res.status(500).json({ err: (err ).message})
   }
 }
 
-const addRelyScore = async (req: Request, res: Response) => {
+const addRelyScore = async (req, res) => {
   try {
     const { commentId, replyId, username, score, storyId } = req.body;
     console.log(`${commentId}, ${replyId}, ${username}, ${score}`)
@@ -79,11 +78,11 @@ const addRelyScore = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message})
+    res.status(500).json({ err: (err ).message})
   }
 }
 
-const removeReplyScore = async (req: Request, res: Response) => {
+const removeReplyScore = async (req, res) => {
   try {
     const { replyId, username, commentRefId } = req.body;
     const removeOld = await CommentLike.removeLikeDiskLike(replyId, username, commentRefId, true);
@@ -95,7 +94,7 @@ const removeReplyScore = async (req: Request, res: Response) => {
       res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
     }
   } catch(err) {
-    res.status(500).json({ err: (err as Error).message})
+    res.status(500).json({ err: (err ).message})
   } 
 }
 module.exports = {

@@ -1,6 +1,5 @@
 // @ts-nocheck 
-import { Request, Response } from "express";
-import User from "../Models/User";
+const User = require("../Models/User");
 
 const sgMail = require('@sendgrid/mail');
 
@@ -15,7 +14,7 @@ var message = {
   html: "<p>HTML version of the message</p>"
 };
 
-const reqResetPassword = async (req:Request, res:Response) => {
+const reqResetPassword = async (req, res) => {
   try {
     const { email } = req.body;
     const result= await User.findUserbyEmail(email);
@@ -33,7 +32,7 @@ const reqResetPassword = async (req:Request, res:Response) => {
 
   // https://stackoverflow.com/questions/60151181/object-is-of-type-unknown-typescript-generics
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 
 }

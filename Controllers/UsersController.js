@@ -1,7 +1,6 @@
 // @ts-nocheck 
-import { NextFunction, Request, Response } from "express";
-import User from "../Models/User";
-import validate from "deep-email-validator";
+const {User} = require("../Models/User");
+const validate = require("deep-email-validator");
 const { createSession } = require('../Middleware/Session');
 const axios = require('axios');
 const crypto = require("crypto");
@@ -10,7 +9,7 @@ const crypto = require("crypto");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const encryptUserData = async (password:string) => {
+const encryptUserData = async (password) => {
   try { 
     const passwordSalt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, passwordSalt);
@@ -24,31 +23,31 @@ const encryptUserData = async (password:string) => {
   }
 }
 
-const comparePasswords = async (password: string, hashedPassword: string) => {
+const comparePasswords = async (password, hashedPassword) => {
   const match = await bcrypt.compare(password, hashedPassword);
   return match;
 }
 
 //https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
-const checkPasswordValid = (password:string) => {
+const checkPasswordValid = (password) => {
   const regex =  /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W)(?!.* ).{8,24}$/;
-  return regex.test(password) as boolean;
+  return regex.test(password);
 }
 
 
-const checkUsernameVali = (username: string) => {
+const checkUsernameVali = (username) => {
   const regex = /^[a-zA-Z][a-zA-Z0-9]{5,20}$/;
 
-  return regex.test(username) as boolean;
+  return regex.test(username);
 
 }
 
-const simpleEmailCheck = async (email: string) => {
+const simpleEmailCheck = async (email) => {
   let res = await validate(email);
   return (res.valid);
 }
 
-const checkEmailRapid = async (email: string) => {
+const checkEmailRapid = async (email) => {
 
   const options = {
     method: 'GET',
@@ -69,7 +68,7 @@ const checkEmailRapid = async (email: string) => {
     return await simpleEmailCheck(email);
   }
 }
-const registerUser = async (req:Request, res:Response) => {
+const registerUser = async (req, res) => {
   const { email, password, username } = req.body;
 
   try {
@@ -115,13 +114,13 @@ const registerUser = async (req:Request, res:Response) => {
       email
     })
     res.end();
-  } catch (err:any) {
+  } catch (err) {
     console.log(err);
     res.status(403).json({ err: err.message })
   }
 }
 
-const changePassword = async (req: Request, res: Response ) => {
+const changePassword = async (req, res ) => {
   const { password, newPassword, username } = req.body;
 
   try {
@@ -166,12 +165,12 @@ const changePassword = async (req: Request, res: Response ) => {
       res.status(500).json({ err: 'Could not fetch data from the database' })
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message })
+    res.status(500).json({ err: (err ).message })
   }
 }
 
 //https://stackoverflow.com/questions/26531143/sessions-wont-save-in-node-js-without-req-session-save
-const loginUser = async (req: any, res: Response, next: NextFunction) => {
+const loginUser = async (req, res, next) => {
   const { email, password } = req.body;
   console.log(password);
   const user = await User.findUserbyEmail(email);
@@ -201,7 +200,7 @@ const loginUser = async (req: any, res: Response, next: NextFunction) => {
   res.end();
 }
 
-const getUserByUsername =async (req: any, res: Response) => {
+const getUserByUsername =async (req, res) => {
   const { user } = req.body;
   try {
     const userRes = await User.findUserbyUsername(user);
@@ -210,7 +209,7 @@ const getUserByUsername =async (req: any, res: Response) => {
     res.status(403).json({ err })
   }
 }
-const getUserSession = async (req: any, res: Response) => {
+const getUserSession = async (req, res) => {
   const {user} = req.session;
   try {
     // console.log(user);
@@ -221,11 +220,11 @@ const getUserSession = async (req: any, res: Response) => {
     res.status(403).json({ err })
   }
 }
-const getUsers =async (req: any, res: Response) => {
+const getUsers =async (req, res) => {
   const data = await User.getUsers();
   res.status(200).json({ user: data})
 }
-const getUserByEmail = async (req: Request, res: Response) => {
+const getUserByEmail = async (req, res) => {
   try {
     const { email } = req.body;
     const data = await User.findUserbyEmail(email);
@@ -235,11 +234,11 @@ const getUserByEmail = async (req: Request, res: Response) => {
   }
 
 }
-const logoutUser = async (req: any, res: Response) => {
+const logoutUser = async (req, res) => {
   req.session.destroy();
   res.status(200).json({ success: true })
 }
-const testControl = (req: Request, res: Response) => {
+const testControl = (req, res) => {
   console.log('hello');
   res.status(200).json({ success: true})
 }

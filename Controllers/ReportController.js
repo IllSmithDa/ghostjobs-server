@@ -1,11 +1,10 @@
 // @ts-nocheck 
-import { Request, Response } from "express";
-import Report from "../Models/Report";
-import Story from "../Models/Story";
-import User from "../Models/User";
-import Comment from "../Models/Comment";
+const {Report} = require("../Models/Report.js");
+const {Story} = require("../Models/Story");
+const {User}= require('../Models/User');
+const {Comment}= require('../Models/Comment');
 
-const postReport = async (req: Request, res: Response) => {
+const postReport = async (req, res) => {
   try {
     const {
       username,
@@ -27,11 +26,11 @@ const postReport = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message})
+    res.status(500).json({ err: (err ).message})
   }
 }
 
-const getReport = async (req: Request, res: Response) => {
+const getReport = async (req, res) => {
   try {
     const {
       reportId
@@ -49,11 +48,11 @@ const getReport = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message})
+    res.status(500).json({ err: (err ).message})
   }
 }
 
-const deleteReport = async (req: Request, res: Response) => {
+const deleteReport = async (req, res) => {
   try {
     const {
       reportId
@@ -69,11 +68,11 @@ const deleteReport = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    res.status(500).json({ err: (err as Error).message})
+    res.status(500).json({ err: (err ).message})
   }
 }
 
-const getReports = async (req:Request, res: Response) => {
+const getReports = async (req, res) => {
   const { offset, limit } = req.params;
   // console.log(`story username: ${username}`)
   try {
@@ -91,11 +90,11 @@ const getReports = async (req:Request, res: Response) => {
       })
     }
   } catch(err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
 
-const strikeUser = async (req: Request, res: Response) => {
+const strikeUser = async (req, res) => {
   const { type, contentId, commentId, username, reportId} = req.body;
   try {
     let result;
@@ -123,7 +122,7 @@ const strikeUser = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message })
+    res.status(401).json({ err: (err ).message })
   }
 }
 

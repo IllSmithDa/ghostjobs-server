@@ -1,18 +1,18 @@
 const { client } = require('../db');
 
-export default class User {
-  email: string;
-  username: string;
-  imageUrl: string;
-  private password: string;
+class User {
+  email;
+  username;
+  imageUrl;
+  password;
 
-  constructor(email: string, username: string, password: string, imageUrl: string) {
+  constructor(email, username, password, imageUrl) {
     this.email = email;
     this.username = username;
     this.password = password;
     this.imageUrl = imageUrl;
   }
-  static async findUserbyUsername(username:string) {
+  static async findUserbyUsername(username) {
     try {
       const query = { 
         text: `SELECT username,id, isAdmin, isbanned, strikes from Users WHERE username = $1`,
@@ -30,10 +30,10 @@ export default class User {
         }
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
-  static async findUserbyEmail(email:string) {
+  static async findUserbyEmail(email) {
     try {
       const query = { 
         text: `SELECT * from users WHERE email = $1`,
@@ -50,10 +50,10 @@ export default class User {
         return { success: false }
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
-  static async getUserPassword(username:string) {
+  static async getUserPassword(username) {
     try {
       const query = { 
         text: `SELECT password from users WHERE username = $1`,
@@ -70,10 +70,10 @@ export default class User {
         return { success: false }
       }
     } catch (err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
-  static async createUser(email: string, username: string, password: string) {
+  static async createUser(email, username, password) {
     try {
       const query = { 
         text: `
@@ -86,7 +86,7 @@ export default class User {
         success: true
       }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
   static async getUsers() {
@@ -99,10 +99,10 @@ export default class User {
         success: true
       }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
-  static async deleteUserById(userId: string) {
+  static async deleteUserById(userId) {
     try {
       const query = {
         text: `
@@ -113,11 +113,11 @@ export default class User {
       const res = await client.query(query);
       return { data: res.rows, success: true }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
 
-  static async checkAdmin(username: string) {
+  static async checkAdmin(username) {
     try {
       const query = {
         text: `
@@ -130,11 +130,11 @@ export default class User {
       if (res.rows[0].isadmin) return true;
       return false;
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
 
-  static async setAdminStatus(status: boolean, username: string) {
+  static async setAdminStatus(status, username) {
     try { 
       const query = {
         text: `
@@ -145,11 +145,11 @@ export default class User {
       await client.query(query);
       return { success: true }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
 
-  static async changePassword(newPassword: string, username: string) {
+  static async changePassword(newPassword, username) {
     try {
       const query = {
         text: `
@@ -160,10 +160,10 @@ export default class User {
       await client.query(query);
       return { success: true }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
-  static async changeUsername(newUsername: string, email: string) {
+  static async changeUsername(newUsername, email) {
     try {
       const query = {
         text: `
@@ -174,10 +174,10 @@ export default class User {
       await client.query(query);
       return { success: true }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
-  static async changeUserEmail(newEmail: string, username: string) {
+  static async changeUserEmail(newEmail, username) {
     try {
       const query = {
         text: `
@@ -188,10 +188,10 @@ export default class User {
       await client.query(query);
       return { success: true }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
-  static async strikeUser(username: string, reportId: string) {
+  static async strikeUser(username, reportId) {
     let isBanned = false;
     try {
       console.log(username);
@@ -201,7 +201,7 @@ export default class User {
       }
       const res = await client.query(finduser);
       console.log(res.rows[0])
-      let currentStrikes:number = Number(res.rows[0].strikes);
+      let currentStrikes = Number(res.rows[0].strikes);
       currentStrikes += 1;
       if (currentStrikes === 10) isBanned = true;
       const query = {
@@ -225,10 +225,10 @@ export default class User {
       }
       return { success: false }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
-  static async checkBan (username: string) {
+  static async checkBan (username) {
     try {
       const query = {
         text: `
@@ -246,11 +246,11 @@ export default class User {
         success: false
       }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
   
-  static async setBan (username: string, banStatus: boolean) {
+  static async setBan (username, banStatus) {
     try {
       const query = {
         text: `
@@ -267,7 +267,11 @@ export default class User {
         success: false
       }
     } catch(err) {
-      return { err: (err as Error).message, success: false }
+      return { err: (err).message, success: false }
     }
   }
+}
+
+module.exports = {
+  User,
 }

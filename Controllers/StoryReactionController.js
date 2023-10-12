@@ -1,9 +1,8 @@
 // @ts-nocheck 
-import { Request, Response } from "express";
-import StoryReaction from "../Models/StoryReaction";
+const {StoryReaction} = require("../Models/StoryReaction");
 
 
-const checkStoryReaction = async (req: Request, res: Response) => {
+const checkStoryReaction = async (req, res) => {
   const {storyId, username} = req.params;
   try {
     const result = await StoryReaction.getMyStoryReaction(storyId, username);
@@ -16,7 +15,7 @@ const checkStoryReaction = async (req: Request, res: Response) => {
   }
 }
 
-const createReaction = async (req: Request, res: Response) => {
+const createReaction = async (req, res) => {
   const { username, storyId, storyTitle, storyAuthor, myReaction, newReaction, oldReaction } = req.body;
   console.log(`retrieved ${username} ${storyId} ${myReaction} ${storyTitle} ${storyAuthor}`)
   try {
@@ -36,7 +35,7 @@ const createReaction = async (req: Request, res: Response) => {
   }
 }
 
-const deleteReaction = async (req: Request, res: Response) => {
+const deleteReaction = async (req, res) => {
   const { username, storyId } = req.params;
   console.log(`retrieved ${username} ${storyId}`)
   try {
@@ -53,7 +52,7 @@ const deleteReaction = async (req: Request, res: Response) => {
   }
 }
 
-const getMyStoryReactions = async (req: Request, res: Response) => {
+const getMyStoryReactions = async (req, res) => {
   const {username, offset, limit} = req.params;
   console.log(`retrieved ${username} ${offset} ${limit}`)
   try {
@@ -66,7 +65,7 @@ const getMyStoryReactions = async (req: Request, res: Response) => {
       })
     }
   } catch (err) {
-    res.status(401).json({ err: (err as Error).message, success: false })
+    res.status(401).json({ err: (err ).message, success: false })
   }
 }
 
