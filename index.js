@@ -6,6 +6,7 @@ const bodyParser =  require('body-parser');
 const {User} =  require('./Models/User');
 const cors = require('cors');
 const corsOptions = require('./config/corsOption');
+const crypto = require('crypto');
 const expressSession = require('express-session');
 const routes = require('./routes/routes');
 const pgSession = require('connect-pg-simple')(expressSession);
@@ -33,8 +34,8 @@ app.set('trust proxy', 1) // trust first prox
 // https://stackoverflow.com/questions/65767024/express-session-not-working-in-production-deployment
 // https://stackoverflow.com/questions/55500547/express-session-does-not-save-the-passport-user-id-when-hosting-on-heroku
 app.use(expressSession({
-  genid: function(req) {
-    return genuuid() // use UUIDs for session IDs
+  genid: function() {
+    return crypto.randomUUID() // use UUIDs for session IDs
   },
   secret: process.env.COOKIE_SECRET,
   cookie: {
