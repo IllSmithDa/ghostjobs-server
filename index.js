@@ -33,11 +33,15 @@ app.set('trust proxy', 1) // trust first prox
 // https://stackoverflow.com/questions/65767024/express-session-not-working-in-production-deployment
 // https://stackoverflow.com/questions/55500547/express-session-does-not-save-the-passport-user-id-when-hosting-on-heroku
 app.use(expressSession({
+  genid: function(req) {
+    return genuuid() // use UUIDs for session IDs
+  },
   secret: process.env.COOKIE_SECRET,
   cookie: {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     sameSite: 'none', 
-    secure: true
+    secure: true,
+    httpOnly: true
   },
   proxy: true,
   name: 'new_cookie_ghostedon',
