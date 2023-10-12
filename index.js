@@ -16,6 +16,9 @@ const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const GOOGLE_CLIENT_ID = process.env.OATH_CLIENT_GOOGLE_ID;
 const GOOGLE_CLIENT_SECRET = process.env.OATH_CLIENT_GOOGLE_SECRET;
 
+const originList = require('./config/allowedOrigins');
+
+
 connectClient();
 client.connect();
 
@@ -96,10 +99,15 @@ app.listen(process.env.PORT || 5000, () => {
 });
 
 app.all('*', (req, res, next) => {
+  const origin = req.headers.origin;
+  if (originList.indexOf(origin) !== -1 || !origin) {
+    res.header("Access-Control-Allow-Origin", origin);
+  }
   res.header("Cache-Control", "no-store,no-cache,must-revalidate");
   res.header("Access-Control-Allow-Headers", ["Content-Type","X-Requested-With","X-HTTP-Method-Override","Accept"]);
   res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
   res.header("Access-Control-Allow-Credentials", true);
+  res.header("Vary", "Origin");
   next();
 })
 
