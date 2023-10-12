@@ -101,7 +101,7 @@ app.listen(process.env.PORT || 5000, () => {
 app.all('*', (req, res, next) => {
   const origin = req.headers.origin;
   if (originList.indexOf(origin) !== -1 || !origin) {
-    res.header("Access-Control-Allow-Origin", origin);
+    res.header("Access-Control-Allow-Origin", 'https://www.ghostedon.com');
   }
   res.header("Cache-Control", "no-store,no-cache,must-revalidate");
   res.header("Access-Control-Allow-Headers", ["Content-Type","X-Requested-With","X-HTTP-Method-Override","Accept"]);
