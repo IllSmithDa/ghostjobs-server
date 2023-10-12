@@ -10,9 +10,8 @@ const ReportController = require('../Controllers/ReportController')
 const SearchController = require('../Controllers/SearchController');
 const AdminController = require('../Controllers/AdminController');
 const Session = require('../Middleware/Session');
-import { Express } from 'express';
 
-module.exports = (server:Express) => {
+module.exports = (server) => {
   server.route('/api/users/register-user')
     .post(UserControllers.registerUser)
   server.route('/api/users/login-user')
