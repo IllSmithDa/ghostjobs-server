@@ -95,5 +95,5 @@ app.get('/auth/google',
   })
 );
 
-routes(app);
+// routes(app);
 export default app;
