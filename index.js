@@ -35,6 +35,7 @@ app.set('trust proxy', 1) // trust first prox
 // https://stackoverflow.com/questions/55500547/express-session-does-not-save-the-passport-user-id-when-hosting-on-heroku
 app.use(expressSession({
   genid: function() {
+    // https://geshan.com.np/blog/2022/01/nodejs-uuid/
     return crypto.randomUUID() // use UUIDs for session IDs
   },
   secret: process.env.COOKIE_SECRET,
