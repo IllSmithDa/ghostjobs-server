@@ -24,7 +24,6 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors(corsOptions));
-
 const port = 5000;
 
 
@@ -95,6 +94,11 @@ passportAuth(app);
 app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+app.all('*', (req, res, next) => {
+  res.header("Cache-Control", "no-store,no-cache,must-revalidate");
+  next();
+})
 
 app.get('/auth/google', 
   passport.authenticate('google', {
