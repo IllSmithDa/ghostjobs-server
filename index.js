@@ -49,7 +49,7 @@ app.use(expressSession({
   proxy: true,
   name: 'new_cookie_ghostedon',
   resave: true,
-  saveUninitialized: false,
+  saveUninitialized: true,
   store:  new pgSession({
     conString: process.env.DATABASE_URL,
     tableName: 'user_sessions' 
@@ -96,6 +96,7 @@ app.listen(process.env.PORT || 5000, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
 
+// https://stackoverflow.com/questions/72224168/why-is-my-cookie-not-being-saved-on-safari-but-being-saved-on-chrome
 app.all('*', (req, res, next) => {
   // const origin = req.headers.origin;
   // if (originList.indexOf(origin) !== -1 || !origin) {

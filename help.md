@@ -70,3 +70,8 @@ https://expressjs.com/en/resources/middleware/session.html
 https://stackoverflow.com/questions/55500547/express-session-does-not-save-the-passport-user-id-when-hosting-on-heroku
 
 https://stackoverflow.com/questions/65767024/express-session-not-working-in-production-deployment
+
+
+18. Cross-domain cookies are not allowed on Safari by default. So having subdomains will fix this problem 
+
+https://stackoverflow.com/questions/72224168/why-is-my-cookie-not-being-saved-on-safari-but-being-saved-on-chrome
