@@ -28,8 +28,6 @@ module.exports = (server) => {
     .get(OauthController.oauthLoginUser);
   server.route('/auth/google/callback')
     .get(OauthController.callbackRoute);
-  server.route('/api/email/request-reset-password')
-    .post(EmailController.reqResetPassword);
   server.route('/api/story/post-story')
     .post(StoryController.postStory);
   server.route('/api/story/stories/:username/:offset/:limit')
@@ -114,4 +112,14 @@ module.exports = (server) => {
     .put(AdminController.strikeUser);
   server.route('/api/admin/ban-user')
     .put(AdminController.banUser);
+
+  // email route
+  server.route('/api/email/request-reset-password')
+    .post(EmailController.reqResetPassword);
+  server.route('/api/reset-password/change-password')
+    .put(EmailController.changePasword);
+  server.route('/api/email/check-token')
+    .put(EmailController.checkToken);
+  server.route('/api/email/token')
+    .post(EmailController.checkEmailToken);
 };

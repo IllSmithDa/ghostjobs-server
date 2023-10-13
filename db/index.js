@@ -167,6 +167,22 @@ const connectClient = async () => {
   //   ADD COLUMN commentId VARCHAR (255)
   //   `
   // )
+
+  // pg admin cannot expire tokens but set it to delete all tokens under userId when user complete process or when user requests new token
+  // await client.query(
+  //   `DROP TABLE iF EXISTS token`
+  // )
+  await client.query(
+    
+    `CREATE TABLE IF NOT EXISTS "tokens" (
+      id BIGSERIAL PRIMARY KEY,
+      userId BIGSERIAL REFERENCES users(id) ON DELETE CASCADE,
+      token VARCHAR(1000) NOT NULL,
+      created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP()
+    )
+    
+    `
+  )
 }
 
 module.exports = {

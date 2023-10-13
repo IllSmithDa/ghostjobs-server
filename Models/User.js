@@ -53,6 +53,26 @@ class User {
       return { err: (err).message, success: false }
     }
   }
+  static async findUserById(id) {
+    try {
+      const query = { 
+        text: `SELECT * from users WHERE id = $1`,
+        values: [id]
+      }
+      const res = await client.query(query);
+      console.log(`user: ${res?.rows[0]}`);
+      if (res?.rows[0]) {
+        return {
+          data: res.rows[0],
+          success: true
+        }
+      } else {
+        return { success: false }
+      }
+    } catch (err) {
+      return { err: (err).message, success: false }
+    }
+  }
   static async getUserPassword(username) {
     try {
       const query = { 
@@ -163,6 +183,22 @@ class User {
       return { err: (err).message, success: false }
     }
   }
+
+  static async changePasswordById (newPassword, userId) {
+    try {
+      const query = {
+        text: `
+          UPDATE users SET password = $1 WHERE id = $2 
+        `,
+        values: [newPassword, userId]
+      }
+      await client.query(query);
+      return { success: true }
+    } catch(err) {
+      return { err: (err).message, success: false }
+    }
+  }
+
   static async changeUsername(newUsername, email) {
     try {
       const query = {
