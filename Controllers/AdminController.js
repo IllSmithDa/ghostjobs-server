@@ -62,9 +62,9 @@ const checkUserBan = async (req, res) => {
 }
 
 const banUser = async (req, res) => {
-  const {eamil} = req.body;
+  const {email} = req.body;
   try {
-    const result = await User.setBan(eamil, true);
+    const result = await User.setBan(email, true);
     if (result.success ) {
       res.status(200).json({
         success: true
