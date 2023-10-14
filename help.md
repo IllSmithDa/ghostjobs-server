@@ -75,3 +75,15 @@ https://stackoverflow.com/questions/65767024/express-session-not-working-in-prod
 18. Cross-domain cookies are not allowed on Safari by default. So having subdomains will fix this problem 
 
 https://stackoverflow.com/questions/72224168/why-is-my-cookie-not-being-saved-on-safari-but-being-saved-on-chrome
+
+19. Creating and setup subdomain and point it to existing server app
+  https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-subdomain/
+  https://developers.cloudflare.com/dns/zone-setups/subdomain-setup/setup/
+  https://docs.digitalocean.com/products/networking/dns/how-to/add-subdomain/
+
+20. Digital Ocean 
+https://docs.digitalocean.com/
+
+21. Good Resource for setting up reset password service
+https://blog.logrocket.com/implementing-secure-password-reset-node-js/
+

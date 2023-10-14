@@ -64,6 +64,8 @@ app.use(expressSession({
   app.use(passport.session());
  
   passport.use(
+    // https://developers.cloudflare.com/dns/manage-dns-records/how-to/create-subdomain/
+    // https://docs.digitalocean.com/products/networking/dns/how-to/add-subdomain/
     new GoogleStrategy(
       {
         clientID: GOOGLE_CLIENT_ID,
