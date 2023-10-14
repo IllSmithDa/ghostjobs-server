@@ -112,8 +112,6 @@ module.exports = (server) => {
     .put(AdminController.strikeUser);
   server.route('/api/admin/ban-user')
     .put(AdminController.banUser);
-  server.route('/api/admin/ban-user')
-    .put(AdminController.banUser);
   server.route('/api/admin/unban-user')
     .put(AdminController.unbanUser);
 
