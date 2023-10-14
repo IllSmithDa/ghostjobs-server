@@ -286,13 +286,34 @@ class User {
     }
   }
   
-  static async setBan (username, banStatus) {
+  static async setBan (email, banStatus) {
     try {
       const query = {
         text: `
-          UPDATE users SET isbanned = $1 WHERE username = $2
+          UPDATE users SET isbanned = $1 WHERE email = $2
         `,
-        values: [banStatus, username]
+        values: [banStatus, email]
+      }
+      const res = await client.query(query);
+      // console.log(res.rows[0]);
+      if (res) return {
+        success: true,
+      }
+      return  {
+        success: false
+      }
+    } catch(err) {
+      return { err: (err).message, success: false }
+    }
+  }
+
+  static async unbanUser (email) {
+    try {
+      const query = {
+        text: `
+          UPDATE users SET isbanned = $1, strikes = $2 WHERE email = $3
+        `,
+        values: [false, 0, email]
       }
       const res = await client.query(query);
       // console.log(res.rows[0]);

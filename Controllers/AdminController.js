@@ -78,9 +78,25 @@ const banUser = async (req, res) => {
 }
 
 const setUserBan = async (req, res) => {
-  const {username, banStatus} = req.body;
+  const {email, banStatus} = req.body;
   try {
-    const result = await User.setBan(username, banStatus);
+    const result = await User.setBan(email, banStatus);
+    if (result.success ) {
+      res.status(200).json({
+        success: true
+      })
+    } else {
+      res.status(500).json({ err: 'Network Err. Please Contanct Support for help'})
+    }
+  } catch (err) {
+    res.status(500).json({ err: (err ).message, success: false })
+  }
+}
+
+const unbanUser = async (req, res) => {
+  const {email} = req.body;
+  try {
+    const result = await User.unbanUser(email);
     if (result.success ) {
       res.status(200).json({
         success: true
@@ -100,4 +116,5 @@ module.exports = {
   checkUserBan,
   banUser,
   setUserBan,
+  unbanUser,
 }

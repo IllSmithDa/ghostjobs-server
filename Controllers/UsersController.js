@@ -180,6 +180,11 @@ const loginUser = async (req, res, next) => {
     res.end();
     return;
   }
+  if (user.data.isbanned) {
+    res.status(403).json({ err: 'User is currently banned. Please contact support for addtional help.' });
+    res.end();
+    return;
+  }
   // console.log(user.data.password)
   const hashedPassword =  user.data.password;
   const match = await comparePasswords(password, hashedPassword);
@@ -214,6 +219,11 @@ const getUserSession = async (req, res) => {
   try {
     // console.log(user);
     const userRes = await User.findUserbyUsername(user);
+    if (userRes.data.isbanned) {
+      res.status(403).json({ err: 'User is currently banned. Please contact support for addtional help.' });
+      res.end();
+      return;
+    }
     // console.log(userRes.data)
     res.status(200).json({ userData: userRes.data })
   } catch(err) {
