@@ -29,7 +29,8 @@ module.exports = (server) => {
   server.route('/auth/google/callback')
     .get(OauthController.callbackRoute);
   server.route('/api/story/post-story')
-    .post(StoryController.postStory);
+    .post(Session.checkSession,
+      StoryController.postStory);
   server.route('/api/story/stories/:username/:offset/:limit')
     .get(StoryController.getMyStories);
     //https://expressjs.com/en/guide/routing.html
