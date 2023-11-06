@@ -113,7 +113,7 @@ const addReplyV1 = async (req, res) => {
   // const {id, commentIdRef, username, replyText, userImage, storyTitle, storyId, score } = req.body;
   try {
     const reply = req.body;
-    const result = await Comment.addReply(commentId, reply);
+    const result = await Comment.addReply(req.body.commentIdRef, reply);
     console.log(result);
     if (result?.success) {
       res.status(200).json({
