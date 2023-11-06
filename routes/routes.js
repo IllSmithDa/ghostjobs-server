@@ -22,6 +22,8 @@ module.exports = (server) => {
     .get(Session.checkSession, UserControllers.getUserSession)
   server.route('/api/users/change-password')
     .put(UserControllers.changePassword);
+  server.route('/api/users/get')
+    .get(UserControllers.getUsers);
 
   // https://stackoverflow.com/questions/73434687/cannot-get-auth-google-callback-passportjs
   server.route('/auth/google')

@@ -110,22 +110,9 @@ const deleteComment = async (req, res) => {
 }
 
 const addReplyV1 = async (req, res) => {
-  const {commentId, replyUsername, replyText, userImage, storyTitle, storyId, score } = req.body;
+  // const {id, commentIdRef, username, replyText, userImage, storyTitle, storyId, score } = req.body;
   try {
-    // https://dev.to/rahmanfadhil/how-to-generate-unique-id-in-javascript-1b13
-    const newId = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
-    // const commentRes = await Comment.createComment(replyUsername, storyTitle,  replyText, storyId, commentId, true);
-    // console.log(commentRes.data.id);
-    const reply = {
-      id: newId.toString(),
-      commentIdRef: commentId,
-      username: replyUsername,
-      userImage: userImage ?? '',
-      score,
-      replyText,
-      storyTitle,
-      storyId
-    ,}
+    const reply = req.body;
     const result = await Comment.addReply(commentId, reply);
     console.log(result);
     if (result?.success) {
